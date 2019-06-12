@@ -7,6 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "playlists")
@@ -16,13 +19,18 @@ public class Playlist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+	@NotNull
 	private String name;
-	private ArrayList<String> songsIds;
-    private Integer rating;
+	
+	private ArrayList<String> songsIds = new ArrayList<>();
+	
+	@Min(0)
+	@Max(5)
+	private Double rating = Math.random() * 5;
     
     public Playlist() {}
 
-    public Playlist(Long id, String name, ArrayList<String> songsIds, Integer rating) {
+    public Playlist(Long id, String name, ArrayList<String> songsIds, Double rating) {
     	this.id = id;
     	this.name = name;
     	this.songsIds = songsIds;
@@ -53,11 +61,11 @@ public class Playlist {
 		this.songsIds = songsIds;
 	}
 
-	public Integer getRating() {
+	public Double getRating() {
 		return rating;
 	}
 
-	public void setRating(Integer rating) {
+	public void setRating(Double rating) {
 		this.rating = rating;
 	}
 }
